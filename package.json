@@ -1,0 +1,29 @@
+{
+  "name": "interview_prep_platform",
+  "version": "1.0.0",
+  "description": "AI Interview Prep Platform with Gemini + Voice Support",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "interview",
+    "gemini",
+    "express",
+    "ai",
+    "mock-interview"
+  ],
+  "author": "Shantanu",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.22.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Mock Interview – Prep Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1d4ed8 0, #020617 40%, #020617 100%);
+      min-height: 100vh;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .glass-card {
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .app-header {
+      border-bottom: 1px solid rgba(55, 65, 81, 0.7);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #22c55e, #22c55e 30%, #14532d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: #022c22;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .badge-round-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #e5e7eb;
+    }
+
+    .app-body {
+      padding: 0.75rem;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        flex-direction: column;
+      }
+    }
+
+    .side-panel {
+      width: 100%;
+      max-width: 280px;
+      border-radius: 1rem;
+      padding: 0.75rem 0.9rem;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+    }
+
+    .side-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 0.15rem;
+    }
+
+    .side-heading {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .side-input,
+    .side-select {
+      width: 100%;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: #020617;
+      color: #e5e7eb;
+      padding: 0.35rem 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .side-input:focus,
+    .side-select:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.18rem 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #9ca3af;
+      margin-right: 0.25rem;
+    }
+
+    .start-btn {
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: linear-gradient(to right, #22c55e, #4ade80);
+      color: #022c22;
+      margin-top: 0.45rem;
+      cursor: pointer;
+    }
+
+    .start-btn:active {
+      transform: translateY(1px);
+    }
+
+    .chat-panel {
+      flex: 1;
+      min-height: 360px;
+      border-radius: 1rem;
+      border: 1px solid rgba(55, 65, 81, 0.7);
+      background: radial-gradient(circle at top left, #020617, #020617);
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    }
+
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.25rem 0.25rem 0.5rem;
+    }
+
+    .msg {
+      max-width: 78%;
+      margin-bottom: 0.6rem;
+      padding: 0.5rem 0.7rem;
+      border-radius: 0.9rem;
+      line-height: 1.4;
+      font-size: 0.84rem;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .msg.user {
+      background: linear-gradient(to right, #2563eb, #1d4ed8);
+      margin-left: auto;
+      border-bottom-right-radius: 0.25rem;
+      color: #e5e7eb;
+    }
+
+    .msg.ai {
+      background: #020617;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      margin-right: auto;
+      border-bottom-left-radius: 0.25rem;
+      color: #e5e7eb;
+    }
+
+    .timestamp {
+      font-size: 0.65rem;
+      opacity: 0.6;
+      margin-top: 0.15rem;
+    }
+
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      border-top: 1px solid rgba(55, 65, 81, 0.9);
+      padding-top: 0.6rem;
+    }
+
+    .icon-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 0.7rem 1rem;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.1s ease;
+    }
+
+    .icon-btn.listening {
+      background: #b91c1c;
+      border-color: #fecaca;
+      box-shadow: 0 0 18px rgba(248, 113, 113, 0.8);
+      color: #fee2e2;
+      transform: scale(1.05);
+    }
+
+    #status {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      margin-top: 0.1rem;
+      min-height: 14px;
+      text-align: center;
+    }
+
+    footer {
+      font-size: 0.7rem;
+      color: #6b7280;
+      text-align: center;
+      padding-bottom: 0.7rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell container-sm">
+    <div class="glass-card">
+      <!-- Header -->
+      <div class="app-header">
+        <div class="brand">
+          <div class="brand-logo">Q</div>
+          <div>
+            <div class="brand-title">QuickPrep · AI Mock Interview</div>
+            <div class="brand-sub">Practice technical + HR rounds like a real call</div>
+          </div>
+        </div>
+        <span class="badge-round-type">
+          Live Voice Session
+        </span>
+      </div>
+
+      <!-- Body -->
+      <div class="app-body">
+        <div class="chat-container">
+          <!-- Left side: controls -->
+          <div class="side-panel">
+            <div class="side-heading">Interview setup</div>
+
+            <div class="mb-2">
+              <div class="side-label">Your name</div>
+              <input
+                id="nameInput"
+                class="side-input"
+                type="text"
+                placeholder="e.g. Shantanu"
+              />
+            </div>
+
+            <div class="mb-2">
+              <div class="side-label">Role</div>
+              <select id="roleSelect" class="side-select">
+                <option value="Frontend Developer" selected>Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Full Stack Engineer">Full Stack Engineer</option>
+                <option value="SDE-1">SDE-1 (Generalist)</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <div class="side-label">Round type</div>
+              <select id="modeSelect" class="side-select">
+                <option value="mixed" selected>Mixed – Tech + HR</option>
+                <option value="technical">Technical only</option>
+                <option value="hr">HR / Behavioral</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <div class="side-label">Focus topics</div>
+              <input
+                id="topicInput"
+                class="side-input"
+                type="text"
+                value="JavaScript, React, DSA, System Design"
+              />
+            </div>
+
+            <div class="mt-2">
+              <span class="pill">Voice only</span>
+              <span class="pill">Live feedback</span>
+            </div>
+
+            <button id="startBtn" class="start-btn">
+              <span>🟢 Start / Reset Interview</span>
+            </button>
+          </div>
+
+          <!-- Right side: chat -->
+          <div class="chat-panel">
+            <div id="chat"></div>
+
+            <div class="input-area">
+              <button id="voiceBtn" class="icon-btn" title="Press and speak your answer">
+                🎤
+              </button>
+              <div id="status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-2">
+      Tip: Treat this like a real Zoom/Meet round. Just speak naturally; no typing needed.
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
